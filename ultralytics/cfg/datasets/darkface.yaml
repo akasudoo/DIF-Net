@@ -1,0 +1,7 @@
+path: D:/yolav11/yolov11/datasets/darkface
+
+train: images/train
+val: images/val
+
+nc: 1
+names: ['face']

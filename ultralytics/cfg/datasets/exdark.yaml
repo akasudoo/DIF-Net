@@ -1,0 +1,39 @@
+path: D:\ultralytics-main\datasets\exdark  # 数据集根目录
+train: images\train  # 训练集路径（相对path的路径）
+#val: images\enfeat2_pseudo     # 验证集路径
+val: images\val
+test: images\test   # 测试集路径
+nc: 12
+class_weights: [1.2, 1.2, 2.0, 1.5, 1.5, 3.0, 2.5, 4.0, 2.0, 1.3, 1.5, 1.0]
+# 类别定义（注意类别名称和顺序）
+names:
+  0: Bicycle
+  1: Boat
+  2: Bus
+  3: Cat
+  4: Chair
+  5: Cup
+  6: Dog
+  7: Motorbike
+  8: People
+  9: Table
+  10: Bottle
+  11: Car
+
+
+#"bicycle","boat", "bus", "cat", "chair", "cup", "dog", "motorbike", "people", "table","bottle","car"
+# ✅ 加上这段增强配置（Ultralytics 支持）
+augmentation:
+  hsv_h: 0.05
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 5.0
+  translate: 0.2
+  scale: 0.5
+  shear: 0.1
+  flipud: 0.5
+  fliplr: 0.5
+  mosaic: True
+  mixup: True
+
+
