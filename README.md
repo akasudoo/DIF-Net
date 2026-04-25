@@ -87,7 +87,8 @@ Input Image
     └── Enhanced Detection-oriented Representation
             └── Object Detector
 
-Citation
+
+## Citation
 
 If you find this work useful for your research, please cite:
 @inproceedings{li2025difnet,
