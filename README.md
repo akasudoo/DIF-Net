@@ -1,11 +1,85 @@
-# DIF-Net
-Enhancing Low-Light Object Detection with Zero-Shot  Dual-Branch Illumination-Invariant Network
+# DIF-Net: Enhancing Low-Light Object Detection with Zero-Shot Dual-Branch Illumination-Invariant Network
 
-Thrilled to share our work was Accepted by MMAsia25!
-<img width="981" height="729" alt="image" src="https://github.com/user-attachments/assets/d4c12b7d-a6c7-4ef1-8486-f1a2079d5de2" />
+Official PyTorch implementation of:
 
-Abstract
+**Enhancing Low-Light Object Detection with Zero-Shot Dual-Branch Illumination-Invariant Network**  
+ACM Multimedia Asia 2025  
+Chengpeng Li, Aiwen Jiang, Jiatian Miao
 
- Object detection in low-light environments remains challenging due to severe image degradation, limited annotations, and the high cost of manuallabeling. While traditional enhancement methods improve visual appearance, they often hinder detection performance. In this work, we propose a lightweight zero-shot enhancement network designed specifically for object detection, enabling effective illumination correction without requiring real low-light data. Unlike pixel-level restoration approaches, our method operates at the feature level, leveraging a physics-inspired model that extracts illumination-invariant representations via Lambertian reflectance and cross-channel chrominance ratios. To enhance global feature perception with minimal computational overhead, we introduce a frequency-domain branch based on complex convolutions, and fuse it adaptively with spatial-domain features through a dual-branch architecture. The proposed module is compact and detector-agnostic, and can be seamlessly integrated into existing frameworks. Extensive experiments show that our approach significantly improves detection performance under low-light conditions, achieving a 4.6% mAP gain on ExDark and a 2.7% improvement on DarkFace.
+[[Paper]](https://doi.org/10.1145/3743093.3771051)
 
- 
+---
+
+## Introduction
+
+Object detection in low-light environments remains challenging due to severe image degradation, uneven illumination, color distortion, and the lack of large-scale annotated low-light datasets. Existing low-light enhancement methods are usually optimized for human visual perception, which may introduce artifacts and semantic inconsistency, leading to degraded detection performance.
+
+To address this problem, we propose **DIF-Net**, a lightweight zero-shot dual-branch illumination-invariant enhancement network designed specifically for low-light object detection. Instead of performing pixel-level image restoration, DIF-Net learns detection-oriented illumination-invariant representations at the feature level.
+
+DIF-Net contains a spatial-domain branch based on Lambertian reflectance and Cross-Chromatic Ratio modeling, and a frequency-domain branch based on complex-valued convolution and Fourier-domain illumination-invariant feature extraction. The extracted features are adaptively fused and combined with a Gray-Edge based illumination estimator to improve object localization under challenging lighting conditions.
+
+---
+
+## Highlights
+
+- **Zero-shot low-light enhancement for detection**  
+  DIF-Net does not require real low-light images during the enhancement stage. Synthetic low-light image pairs are generated from normal-light images for illumination-invariant feature learning.
+
+- **Detection-oriented feature enhancement**  
+  Unlike traditional low-light enhancement methods, DIF-Net operates at the feature level and is optimized for object detection rather than visual quality.
+
+- **Dual-branch illumination-invariant representation**  
+  The spatial branch extracts non-illumination features using Lambertian reflectance and Cross-Chromatic Ratio modeling, while the frequency branch captures global structural information using complex-valued convolution.
+
+- **Lightweight and detector-agnostic design**  
+  DIF-Net introduces only approximately **0.055M** additional parameters and can be integrated into different detectors such as YOLOv8n, YOLOv10n, YOLOv11n, and Faster R-CNN.
+
+- **Strong performance on low-light benchmarks**  
+  DIF-Net achieves significant improvements on ExDark and DarkFace, demonstrating strong generalization ability.
+
+---
+
+## Framework
+
+The overall framework consists of the following components:
+
+1. **Spatial-domain Non-Illumination Module**
+
+   The spatial branch is inspired by the Lambertian reflectance model. It extracts illumination-invariant features by computing Cross-Chromatic Ratio features among RGB channels.
+
+2. **Frequency-domain Non-Illumination Module**
+
+   The frequency branch applies Fourier transform and complex-valued convolution to model both amplitude and phase information. This branch helps preserve structural cues such as object contours, textures, and boundaries under low illumination.
+
+3. **Adaptive Feature Fusion Module**
+
+   Spatial-domain and frequency-domain features are adaptively fused through learnable attention weights. A channel attention mechanism is further introduced to suppress noise and artifacts caused by feature fusion.
+
+4. **Consistency Loss**
+
+   A consistency loss is used to align illumination-invariant features extracted from paired normal-light and synthetic low-light images.
+
+5. **Gray-Edge based Illumination Estimator**
+
+   A local illumination map is estimated using a Gray-Edge prior and concatenated with illumination-invariant features to improve boundary localization and structural awareness.
+
+---
+
+## Method Overview
+
+```text
+Input Image
+    │
+    ├── Spatial-domain Non-Illumination Module
+    │       └── Lambertian Reflectance + Cross-Chromatic Ratio
+    │
+    ├── Frequency-domain Non-Illumination Module
+    │       └── Fourier Transform + Complex Convolution + Frequency CCR
+    │
+    ├── Adaptive Feature Fusion
+    │       └── Spatial/Frequency Feature Fusion + Channel Attention
+    │
+    ├── Gray-Edge Illumination Estimator
+    │
+    └── Enhanced Detection-oriented Representation
+            └── Object Detector
