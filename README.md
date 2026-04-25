@@ -86,3 +86,16 @@ Input Image
     │
     └── Enhanced Detection-oriented Representation
             └── Object Detector
+
+Citation
+
+If you find this work useful for your research, please cite:
+@inproceedings{li2025difnet,
+  title     = {Enhancing Low-Light Object Detection with Zero-Shot Dual-Branch Illumination-Invariant Network},
+  author    = {Li, Chengpeng and Jiang, Aiwen and Miao, Jiatian},
+  booktitle = {Proceedings of the 7th ACM International Conference on Multimedia in Asia},
+  year      = {2025},
+  pages     = {1--7},
+  doi       = {10.1145/3743093.3771051}
+}
+
