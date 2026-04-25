@@ -10,6 +10,9 @@ Chengpeng Li, Aiwen Jiang, Jiatian Miao
 
 ---
 
+<img width="685" height="507" alt="屏幕截图 2026-04-25 162623" src="https://github.com/user-attachments/assets/76f5fae9-9fe3-4f24-9d7e-784ad378ab3f" />
+
+
 ## Introduction
 
 Object detection in low-light environments remains challenging due to severe image degradation, uneven illumination, color distortion, and the lack of large-scale annotated low-light datasets. Existing low-light enhancement methods are usually optimized for human visual perception, which may introduce artifacts and semantic inconsistency, leading to degraded detection performance.
